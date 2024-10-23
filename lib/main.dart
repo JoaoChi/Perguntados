@@ -1,57 +1,48 @@
 import 'package:flutter/material.dart';
-import './resultado.dart';
 import './questionario.dart';
+import './resultado.dart';
 
-main() {
-  runApp(new PerguntaApp());
-}
-
-class PerguntaApp extends StatefulWidget {
-  @override
-  State<PerguntaApp> createState() => _PerguntaAppState();
-}
+void main() => runApp(const PerguntaApp());
 
 class _PerguntaAppState extends State<PerguntaApp> {
   var _perguntaSelecionada = 0;
   var _pontuacaoTotal = 0;
   final _perguntas = const [
     {
-      'Texto': 'qual é sua cor favorita?',
+      'texto': 'Voce é gente boa?',
       'respostas': [
-        {'Texto': 'Preto', 'nota': 10},
-        {'Texto': 'Vermelho', 'nota': 5},
-        {'Texto': 'Branco', 'nota': 3},
-        {'Texto': 'Verde', 'nota': 1}
+        {'texto': 'Sim', 'pontuacao': 10},
+        {'texto': 'Mais ou menos', 'pontuacao': 5},
+        {'texto': 'Quase nada', 'pontuacao': 3},
+        {'texto': 'Não sou', 'pontuacao': 1},
       ],
     },
     {
-      'Texto': 'Ai seila',
+      'texto': 'Gosta de animais?',
       'respostas': [
-        {'Texto': 'nao sei', 'nota': 10},
-        {'Texto': 'tb nao', 'nota': 5},
-        {'Texto': 'ixi menos eu', 'nota': 3},
-        {'Texto': 'eu sei ...', 'nota': 1}
+        {'texto': 'Amo', 'pontuacao': 10},
+        {'texto': 'Gosto', 'pontuacao': 5},
+        {'texto': 'Nem tanto', 'pontuacao': 3},
+        {'texto': 'Odeio', 'pontuacao': 1},
       ],
     },
     {
-      'Texto': 'naoaooooo',
+      'texto': 'Gosta de salada?',
       'respostas': [
-        {'Texto': 'nao aperte dnv', 'nota': 10},
-        {'Texto': 'nao ne ', 'nota': 5},
-        {'Texto': 'masome', 'nota': 3},
-        {'Texto': 'pare gay', 'nota': 1},
+        {'texto': 'Odeio', 'pontuacao': 10},
+        {'texto': 'Nao gosto', 'pontuacao': 5},
+        {'texto': 'Até que sim', 'pontuacao': 3},
+        {'texto': 'Amo', 'pontuacao': 1},
       ],
-    },
-    {
-      'Texto': 'ixi',
-      'respostas': [
-        {'Texto': 'aperto kkkk', 'nota': 5},
-        {'Texto': 'sai fora', 'nota': 3},
-        {'Texto': '^^', 'nota': 1},
-        {'Texto': ':O', 'nota': 10},
-      ],
-    },
+    }
   ];
+
+  void _reiniciarForm() {
+    setState(() {
+      _perguntaSelecionada = 0;
+      _pontuacaoTotal = 0;
+    });
+  }
 
   void _responder(int pontuacao) {
     if (temPerguntaSelecionada) {
@@ -60,6 +51,7 @@ class _PerguntaAppState extends State<PerguntaApp> {
         _pontuacaoTotal += pontuacao;
       });
     }
+
     print(_pontuacaoTotal);
   }
 
@@ -72,20 +64,27 @@ class _PerguntaAppState extends State<PerguntaApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text(
-            "Appzada do guri",
-            style: TextStyle(color: Colors.white),
-          ),
-          backgroundColor: Colors.black,
+          title: const Text('Primeiro App Flutter'),
+          backgroundColor: Colors.amber,
           centerTitle: true,
         ),
         body: temPerguntaSelecionada
             ? Questionario(
                 perguntas: _perguntas,
                 perguntaSelecionada: _perguntaSelecionada,
-                responder: _responder)
-            : Resultado(),
+                quandoResponder: _responder,
+              )
+            : Resultado(_pontuacaoTotal, _reiniciarForm),
       ),
     );
+  }
+}
+
+class PerguntaApp extends StatefulWidget {
+  const PerguntaApp({super.key});
+
+  @override
+  _PerguntaAppState createState() {
+    return _PerguntaAppState();
   }
 }
