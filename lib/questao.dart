@@ -1,10 +1,22 @@
 import 'package:flutter/material.dart';
 
 class Questao extends StatelessWidget {
-  const Questao({super.key});
+  String texto;
+
+  Questao(this.texto);
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Container(
+      width: double.infinity,
+      margin: EdgeInsets.fromLTRB(12, 12, 12, 5),
+      child: Text(
+        texto,
+        style: TextStyle(
+          fontSize: 28,
+        ),
+        textAlign: TextAlign.center,
+      ),
+    );
   }
 }
